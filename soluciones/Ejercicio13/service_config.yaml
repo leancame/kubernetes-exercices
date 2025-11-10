@@ -1,0 +1,13 @@
+# Configuración del Service para Nginx
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service  # Nombre del servicio
+spec:
+  type: NodePort  # Tipo de servicio expuesto a través de un NodePort
+  selector:
+    app: nginx  # Selector para asociar el servicio con los pods correspondientes
+  ports:
+    - protocol: TCP  # Protocolo utilizado (TCP en este caso)
+      port: 80  # Puerto expuesto por el servicio
+      targetPort: 80  # Puerto objetivo dentro del contenedor

@@ -1,0 +1,21 @@
+# Configuración del Deployment para la aplicación "demogat-yaml" en el namespace "lcm"
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demogat-yaml  # Nombre del deployment
+  namespace: lcm  # Namespace al que pertenece el deployment
+spec:
+  replicas: 2  # Número de réplicas de pods que se mantendrán
+  strategy:
+    type: RollingUpdate  # Estrategia de despliegue utilizada (actualización continua)
+  selector:
+    matchLabels:
+      app: gato  # Selector para identificar los pods gestionados por este deployment
+  template:
+    metadata:
+      labels:
+        app: gato  # Etiqueta asignada a los pods para su identificación
+    spec:
+      containers:
+      - name: tomcat  # Nombre del contenedor
+        image: tomcat:11.0.0-M20  # Imagen Docker utilizada para Tomcat

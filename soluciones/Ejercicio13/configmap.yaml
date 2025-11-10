@@ -1,0 +1,15 @@
+# Configuración del ConfigMap para Nginx
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config  # Nombre del ConfigMap
+data:
+  index.html: |  # Archivo index.html proporcionado como parte del ConfigMap
+    <html>
+      <head>
+        <title>Configmap</title>
+      </head>
+      <body>
+        <h1>Mira mi index, creado con Configmap</h1>
+      </body>
+    </html>

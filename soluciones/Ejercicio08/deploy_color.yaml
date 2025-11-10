@@ -1,0 +1,36 @@
+# Configuración del Deployment para la aplicación "colors"
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: colors  # Nombre del deployment
+spec:
+  replicas: 3  # Número de réplicas de pods que se mantendrán
+  selector:
+    matchLabels:
+      app: colors  # Etiqueta que deben coincidir los pods gestionados por este deployment
+  template:
+    metadata:
+      labels:
+        app: colors  # Etiqueta asignada a los pods para su identificación
+    spec:
+      containers:
+      - name: coloread  # Nombre del contenedor
+        image: noloknolo/colors:v1  # Imagen Docker utilizada para el contenedor
+        ports:
+        - containerPort: 8080  # Puerto expuesto por el contenedor
+
+---
+
+# Configuración del Service para la aplicación "colors"
+apiVersion: v1
+kind: Service
+metadata:
+  name: colors-service  # Nombre del servicio
+spec:
+  type: ClusterIP  # Tipo de servicio (solo accesible dentro del clúster)
+  ports:
+  - port: 8080  # Puerto del servicio expuesto
+    protocol: TCP  # Protocolo utilizado (TCP en este caso)
+    targetPort: 8080  # Puerto objetivo dentro del contenedor
+  selector:
+    app: colors  # Selector para asociar el servicio con los pods

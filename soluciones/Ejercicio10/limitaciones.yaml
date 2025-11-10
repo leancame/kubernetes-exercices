@@ -1,0 +1,15 @@
+# Configuración de LimitRange para gestionar los límites de recursos en el namespace "lcarbajo"
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: resource-limits  # Nombre de la configuración de límites
+  namespace: lcarbajo  # Namespace al que se aplica esta configuración
+spec:
+  limits:
+  - default:
+      cpu: "1"  # Límite máximo de CPU para los contenedores (1 vCPU)
+      memory: "1Gi"  # Límite máximo de memoria para los contenedores (1 GiB)
+    defaultRequest:
+      cpu: "500m"  # Solicitud predeterminada de CPU (500 milicores)
+      memory: "512Mi"  # Solicitud predeterminada de memoria (512 MiB)
+    type: Container  # Tipo de recurso al que se aplican los límites (contenedores)

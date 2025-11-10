@@ -1,0 +1,27 @@
+# Configuración del Deployment para Nginx con un ConfigMap
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-config  # Nombre del deployment
+spec:
+  replicas: 2  # Número de réplicas de pods que se mantendrán
+  selector:
+    matchLabels:
+      app: nginx  # Selector para identificar los pods gestionados por este deployment
+  template:
+    metadata:
+      labels:
+        app: nginx  # Etiqueta asignada a los pods para su identificación
+    spec:
+      containers:
+        - name: nginx  # Nombre del contenedor
+          image: nginx:latest  # Imagen Docker utilizada para Nginx
+          ports:
+            - containerPort: 80  # Puerto expuesto por el contenedor
+          volumeMounts:
+            - name: nginx-index  # Nombre del volumen montado
+              mountPath: /usr/share/nginx/html  # Ruta donde se monta el volumen en el contenedor
+      volumes:
+        - name: nginx-index  # Nombre del volumen
+          configMap:
+            name: nginx-config  # Nombre del ConfigMap que proporciona los datos para el volumen

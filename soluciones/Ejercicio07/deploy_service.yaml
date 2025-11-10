@@ -1,0 +1,33 @@
+# Configuración del Deployment para la aplicación web
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-d  # Nombre del deployment
+spec:
+  selector:
+    matchLabels:
+      app: web  # Etiqueta que deben coincidir los pods gestionados por este deployment
+  replicas: 2  # Número de réplicas de pods que se mantendrán
+  template:
+    metadata:
+      labels:
+        app: web  # Etiqueta asignada a los pods para su identificación
+    spec:
+      containers:
+      - name: apache  # Nombre del contenedor
+        image: lcarbajo/kubernetes:latest  # Imagen Docker utilizada para el contenedor
+        ports:
+        - containerPort: 80  # Puerto expuesto por el contenedor
+---
+# Configuración del Service para exponer el deployment
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-svc  # Nombre del servicio
+spec:
+  type: NodePort  # Tipo de servicio expuesto a través de un NodePort
+  ports:
+  - port: 80  # Puerto del servicio
+    nodePort: 30002  # Puerto del nodo mapeado al puerto del servicio
+  selector:
+    app: web  # Selector para asociar el servicio con los pods

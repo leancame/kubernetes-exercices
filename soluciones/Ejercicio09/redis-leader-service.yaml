@@ -1,0 +1,17 @@
+# Configuración del Service para Redis en el rol de líder
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-leader  # Nombre del servicio
+  labels:
+    app: redis  # Nombre de la aplicación
+    role: leader  # Rol del servicio dentro del sistema (líder)
+    tier: backend  # Nivel de la aplicación (backend)
+spec:
+  ports:
+  - port: 6379  # Puerto expuesto por el servicio
+    targetPort: 6379  # Puerto objetivo dentro del contenedor
+  selector:
+    app: redis  # Selector para asociar el servicio con los pods correspondientes
+    role: leader  # Rol del pod asociado
+    tier: backend  # Nivel asignado a los pods

@@ -1,0 +1,15 @@
+# Configuración del Service para la capa frontend de la aplicación Guestbook
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend  # Nombre del servicio
+  labels:
+    app: guestbook  # Etiqueta de la aplicación
+    tier: frontend  # Etiqueta para la capa frontend
+spec:  
+  type: NodePort  # Tipo de servicio expuesto a través de un NodePort
+  ports:
+  - port: 80  # Puerto expuesto por el servicio
+  selector:
+    app: guestbook  # Selector para asociar el servicio con los pods correspondientes
+    tier: frontend  # Selector para la capa frontend

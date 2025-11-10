@@ -1,0 +1,30 @@
+# Configuración del Deployment para Redis en el rol de seguidor (follower)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-follower  # Nombre del deployment
+  labels:
+    app: redis  # Nombre de la aplicación
+    role: follower  # Rol del pod dentro del sistema (seguidor)
+    tier: backend  # Nivel de la aplicación (backend)
+spec:
+  replicas: 2  # Número de réplicas para los seguidores
+  selector:
+    matchLabels:
+      app: redis  # Selector para identificar los pods gestionados por este deployment
+  template:
+    metadata:
+      labels:
+        app: redis  # Etiqueta para los pods
+        role: follower  # Rol específico de los pods (seguidor)
+        tier: backend  # Nivel asignado a los pods
+    spec:
+      containers:
+      - name: follower  # Nombre del contenedor
+        image: us-docker.pkg.dev/google-samples/containers/gke/gb-redis-follower:v2  # Imagen de Docker para Redis follower
+        resources:
+          requests:
+            cpu: 100m  # Recursos mínimos de CPU requeridos
+            memory: 100Mi  # Recursos mínimos de memoria requeridos
+        ports:
+        - containerPort: 6379  # Puerto expuesto por el contenedor

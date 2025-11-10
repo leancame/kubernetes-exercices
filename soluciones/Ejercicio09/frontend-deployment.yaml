@@ -1,0 +1,30 @@
+# Configuración del Deployment para la capa frontend de la aplicación Guestbook
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend  # Nombre del deployment
+spec:
+  replicas: 3  # Número de réplicas para la capa frontend
+  selector:
+    matchLabels:
+        app: guestbook  # Selector para identificar los pods de la aplicación Guestbook
+        tier: frontend  # Selector para la capa frontend
+  template:
+    metadata:
+      labels:
+        app: guestbook  # Etiqueta de la aplicación
+        tier: frontend  # Etiqueta para la capa frontend
+    spec:
+      containers:
+      - name: php-redis  # Nombre del contenedor
+        image: us-docker.pkg.dev/google-samples/containers/gke/gb-frontend:v5  # Imagen de Docker para el frontend
+        env:
+        - name: GET_HOSTS_FROM  # Variable de entorno para la configuración de hosts
+          value: "dns"  # Valor de la variable
+        resources:
+          requests:
+            cpu: 100m  # Recursos mínimos de CPU requeridos
+            memory: 100Mi  # Recursos mínimos de memoria requeridos
+        ports:
+        - containerPort: 80  # Puerto expuesto por el contenedor
+

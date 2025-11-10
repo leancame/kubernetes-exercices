@@ -1,0 +1,16 @@
+# Configuración del Service para Redis en el rol de seguidor (follower)
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-follower  # Nombre del servicio
+  labels:
+    app: redis  # Nombre de la aplicación
+    role: follower  # Rol del servicio dentro del sistema (seguidor)
+    tier: backend  # Nivel de la aplicación (backend)
+spec:
+  ports:
+  - port: 6379  # Puerto expuesto por el servicio
+  selector:
+    app: redis  # Selector para asociar el servicio con los pods correspondientes
+    role: follower  # Rol del pod asociado (seguidor)
+    tier: backend  # Nivel asignado a los pods

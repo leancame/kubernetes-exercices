@@ -1,0 +1,30 @@
+# Configuración del Deployment para Redis en el rol de líder
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-leader  # Nombre del deployment
+  labels:
+    app: redis  # Nombre de la aplicación
+    role: leader  # Rol del pod dentro del sistema (líder)
+    tier: backend  # Nivel de la aplicación (backend)
+spec:
+  replicas: 1  # Número de réplicas del líder (una única instancia)
+  selector:
+    matchLabels:
+      app: redis  # Selector para identificar los pods gestionados por este deployment
+  template:
+    metadata:
+      labels:
+        app: redis  # Etiqueta para los pods
+        role: leader  # Rol específico de los pods (líder)
+        tier: backend  # Nivel asignado a los pods
+    spec:
+      containers:
+      - name: leader  # Nombre del contenedor
+        image: "docker.io/redis:6.0.5"  # Imagen de Docker para Redis
+        resources:
+          requests:
+            cpu: 100m  # Recursos mínimos de CPU requeridos
+            memory: 100Mi  # Recursos mínimos de memoria requeridos
+        ports:
+        - containerPort: 6379  # Puerto expuesto por el contenedor
