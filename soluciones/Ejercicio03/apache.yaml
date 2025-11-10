@@ -1,0 +1,18 @@
+# Especifica la versión de la API que se usará para manejar este recurso
+apiVersion: v1 
+
+# Define el tipo de recurso, en este caso, un Pod
+kind: Pod 
+
+# Metadatos del Pod, como su nombre único dentro del namespace
+metadata:
+  name: apache  # Nombre del Pod
+
+# Especificación del Pod
+spec:
+  restartPolicy: Always  # Política de reinicio: siempre reiniciar el contenedor si falla
+  containers:
+    - name: apache-yaml  # Nombre del contenedor dentro del Pod
+      image: httpd  # Imagen Docker para este contenedor (servidor Apache HTTP)
+      ports:
+      - containerPort: 80  # Puerto expuesto por el contenedor

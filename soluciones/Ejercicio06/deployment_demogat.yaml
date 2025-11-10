@@ -1,0 +1,23 @@
+# Especifica la versión de la API que se usará para manejar este recurso
+apiVersion: apps/v1 
+# Define el tipo de recurso, en este caso, un Deployment
+kind: Deployment 
+# Metadatos del Deployment, como su nombre único dentro del namespace
+metadata:
+  name: demogat-yaml  # Nombre del Deployment
+  labels:
+    estado: "1"  # Etiqueta para identificar el estado del Deployment
+# Especificación del Deployment
+spec:
+  replicas: 1  # Número de réplicas de pods que se deben mantener activas
+  selector:
+    matchLabels:
+      app: gato  # Etiqueta que selecciona los pods gestionados por este Deployment
+  template:
+    metadata:
+      labels:
+        app: gato  # Etiqueta asignada a los pods creados por este template
+    spec:
+      containers:
+      - name: tomcat  # Nombre del contenedor dentro del pod
+        image: tomcat:11.0.0-M20  # Imagen Docker para este contenedor (Tomcat versión específica)

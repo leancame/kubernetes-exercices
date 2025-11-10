@@ -1,0 +1,19 @@
+# Define la versión de la API de Kubernetes utilizada para este recurso.
+apiVersion: v1
+
+# Especifica el tipo de recurso de Kubernetes. En este caso, es un Pod.
+kind: Pod 
+
+# Metadatos asociados al Pod, como su nombre.
+metadata:
+  # Nombre del Pod.
+  name: apache
+
+# Especifica las características del Pod y sus contenedores.
+spec:
+  # Lista de contenedores que se ejecutarán dentro del Pod.
+  containers:
+    - # Nombre del contenedor dentro del Pod.
+      name: apache
+      # Imagen que se utilizará para el contenedor, en este caso, la imagen oficial de Apache HTTP Server.
+      image: httpd
