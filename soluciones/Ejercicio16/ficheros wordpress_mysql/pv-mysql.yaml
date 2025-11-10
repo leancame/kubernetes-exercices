@@ -1,0 +1,14 @@
+# Configuración del PersistentVolume para MySQL utilizando NFS
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-mysql  # Nombre del PersistentVolume
+spec:
+  capacity:
+    storage: 25Gi  # Capacidad de almacenamiento del volumen
+  accessModes:
+    - ReadWriteMany  # Modo de acceso que permite lecturas y escrituras desde múltiples nodos
+  storageClassName: mysql  # Clase de almacenamiento asociada al volumen
+  nfs:  # Configuración para el almacenamiento NFS
+    path: /var/kubernetes/datos/mysql  # Ruta en el servidor NFS donde se almacena el volumen
+    server: 192.168.67.2  # Dirección IP del servidor NFS

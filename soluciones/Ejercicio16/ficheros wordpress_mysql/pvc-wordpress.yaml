@@ -1,0 +1,12 @@
+# Configuración del PersistentVolumeClaim para WordPress
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-wordpress  # Nombre del PersistentVolumeClaim
+spec:
+  storageClassName: wordpress  # Clase de almacenamiento asociada al volumen
+  accessModes:
+    - ReadWriteMany  # Modo de acceso que permite lecturas y escrituras desde múltiples nodos
+  resources:
+    requests:
+      storage: 20Gi  # Capacidad de almacenamiento solicitada para el volumen

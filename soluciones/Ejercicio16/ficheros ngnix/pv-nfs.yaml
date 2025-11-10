@@ -1,0 +1,14 @@
+# Configuración del PersistentVolume utilizando NFS
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv  # Nombre del PersistentVolume
+spec:
+  capacity:
+    storage: 5Gi  # Capacidad de almacenamiento del volumen
+  accessModes:
+    - ReadWriteMany  # Modo de acceso que permite lecturas y escrituras desde múltiples nodos
+  storageClassName: volumen-nfs  # Clase de almacenamiento asociada al volumen
+  nfs:  # Configuración para el almacenamiento NFS
+    path: /var/datos  # Ruta en el servidor NFS donde se almacena el volumen
+    server: 192.168.67.2  # Dirección IP del servidor NFS

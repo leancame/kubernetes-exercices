@@ -1,0 +1,18 @@
+# Configuración del Pod con afinidad para el nodo "worker-1"
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-worker1  # Nombre del pod
+spec:
+  affinity:
+    nodeAffinity:  # Afinidad basada en nodos
+      requiredDuringSchedulingIgnoredDuringExecution:  # Requisito obligatorio para programar el pod
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: role  # Clave que se verifica en las etiquetas del nodo
+            operator: In  # El operador especifica que el valor debe coincidir
+            values:
+            - worker-1  # Valor requerido en la etiqueta del nodo
+  containers:
+  - name: nginx  # Nombre del contenedor
+    image: nginx  # Imagen Docker utilizada para Nginx

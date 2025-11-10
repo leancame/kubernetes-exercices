@@ -1,0 +1,12 @@
+# Configuración del Service para Apache
+apiVersion: v1
+kind: Service
+metadata:
+  name: apache  # Nombre del servicio
+  labels: 
+    run: apache  # Etiqueta asociada al servicio
+spec:
+  ports: 
+  - port: 80  # Puerto expuesto por el servicio
+  selector:
+    run: apache  # Selector para asociar el servicio con los pods correspondientes

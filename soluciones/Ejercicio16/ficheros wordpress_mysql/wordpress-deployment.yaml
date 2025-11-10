@@ -1,0 +1,54 @@
+# Deployment para WordPress
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress  # Nombre del Deployment
+  labels:
+    app: wordpress  # Etiqueta de aplicación
+spec:
+  selector:
+    matchLabels:
+      app: wordpress  # Selector para emparejar pods
+      tier: frontend
+  strategy:
+    type: Recreate  # Estrategia de despliegue para reemplazar todos los pods
+  template:
+    metadata:
+      labels:
+        app: wordpress
+        tier: frontend
+    spec:
+      containers:
+      - image: wordpress:4.8-apache  # Imagen de WordPress
+        imagePullPolicy: Never  # Política para evitar pull de la imagen
+        name: wordpress  # Nombre del contenedor
+        env:  # Variables de entorno para la configuración de WordPress
+        - name: WORDPRESS_DB_HOST
+          value: mysql  # Nombre del host de la base de datos
+        - name: WORDPRESS_DB_PASSWORD
+          value: password  # Contraseña de la base de datos
+        ports:
+        - containerPort: 80  # Puerto en el contenedor
+          name: wordpress
+        volumeMounts:
+        - name: wordpress-persistent-storage  # Montaje del volumen
+          mountPath: /var/www/html
+      volumes:
+      - name: wordpress-persistent-storage  # Volumen persistente
+        persistentVolumeClaim:
+          claimName: pvc-wordpress  # Referencia al PVC
+---
+# Service para WordPress
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress  # Nombre del Service
+  labels:
+    app: wordpress
+spec:
+  ports:
+    - port: 80  # Puerto de servicio expuesto
+  selector:
+    app: wordpress  # Selector para encontrar los pods de WordPress
+    tier: frontend
+  type: NodePort  # Tipo de servicio para acceso externo

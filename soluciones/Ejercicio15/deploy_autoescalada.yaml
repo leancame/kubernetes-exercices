@@ -1,0 +1,26 @@
+# Configuración del Deployment para Apache con soporte para autoescalado
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache-autoescalada  # Nombre del deployment
+spec:
+  selector:  
+    matchLabels:
+      run: apache  # Selector para identificar los pods gestionados por este deployment
+  replicas: 1  # Número inicial de réplicas de pods
+  template:   
+    metadata:
+      labels:
+        run: apache  # Etiqueta asignada a los pods para su identificación
+    spec:
+      containers:
+      - name: apache  # Nombre del contenedor
+        image: registry.k8s.io/hpa-example  # Imagen Docker utilizada
+        ports:
+        - containerPort: 80  # Puerto expuesto por el contenedor
+        resources:
+          limits:
+              cpu: 500m  # Límite máximo de CPU asignado al contenedor
+          requests:
+              cpu: 200m  # Solicitud inicial de CPU para el contenedor
+

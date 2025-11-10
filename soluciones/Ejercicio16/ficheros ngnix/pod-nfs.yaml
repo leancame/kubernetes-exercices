@@ -1,0 +1,16 @@
+# Configuración del Pod que utiliza un PersistentVolumeClaim con NFS
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-nfs  # Nombre del pod
+spec:
+  containers:
+  - name: nginx  # Nombre del contenedor
+    image: nginx  # Imagen Docker utilizada
+    volumeMounts:  # Montaje de volúmenes en el contenedor
+      - mountPath: /usr/share/nginx/html  # Ruta dentro del contenedor donde se monta el volumen
+        name: nfs-vol  # Nombre del volumen
+  volumes:
+    - name: nfs-vol  # Nombre del volumen
+      persistentVolumeClaim:
+        claimName: nfs-pvc  # PersistentVolumeClaim utilizado por el volumen

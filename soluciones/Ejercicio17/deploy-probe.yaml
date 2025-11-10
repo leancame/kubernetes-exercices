@@ -1,0 +1,32 @@
+# Configuración del Deployment con liveness y readiness probes
+apiVersion: apps/v1           
+kind: Deployment                
+metadata:
+  name: probes  # Nombre del deployment          
+spec:
+  replicas: 1  # Número de réplicas de pods                
+  selector:
+    matchLabels:
+      app: probes  # Selector para identificar los pods gestionados por este deployment       
+  template:                    
+    metadata:
+      labels:
+        app: probes  # Etiqueta asignada a los pods para su identificación     
+    spec:
+      containers:
+      - name: probes  # Nombre del contenedor     
+        image: dboffelli/testing_probes:2.0  # Imagen Docker utilizada
+        ports:
+        - containerPort: 8080  # Puerto expuesto por el contenedor  
+        livenessProbe:  # Configuración de la liveness probe        
+          httpGet:  # Revisión basada en una solicitud HTTP             
+            path: /  # Ruta a consultar para verificar la salud            
+            port: 8080  # Puerto para la consulta          
+          initialDelaySeconds: 15  # Tiempo de espera antes de realizar la primera consulta  
+          periodSeconds: 10  # Intervalo entre consultas        
+        readinessProbe:  # Configuración de la readiness probe       
+          httpGet:
+            path: /healthy  # Ruta a consultar para verificar si el pod está listo    
+            port: 8080  # Puerto para la consulta
+          initialDelaySeconds: 5  # Tiempo de espera antes de realizar la primera consulta  
+          periodSeconds: 5  # Intervalo entre consultas         

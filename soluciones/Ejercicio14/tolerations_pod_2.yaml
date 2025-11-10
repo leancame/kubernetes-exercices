@@ -1,0 +1,23 @@
+# Configuración del Pod con afinidad y tolerancia
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-worker2-conafinity  # Nombre del pod
+spec:
+  affinity:
+    nodeAffinity:  # Afinidad basada en nodos
+      requiredDuringSchedulingIgnoredDuringExecution:  # Requisito obligatorio para programar el pod
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: role  # Clave que se verifica en las etiquetas del nodo
+                operator: In  # El operador especifica que el valor debe coincidir
+                values:
+                  - worker-3  # Valor requerido en la etiqueta del nodo
+  tolerations:  # Configuración de tolerancias
+    - key: "memoria"  # Clave de la tolerancia
+      operator: "Equal"  # Operador para comparar valores
+      value: "grande"  # Valor que se debe tolerar
+      effect: "NoSchedule"  # Efecto que permite programar el pod en nodos con la taint correspondiente
+  containers:
+  - name: nginx  # Nombre del contenedor
+    image: nginx  # Imagen Docker utilizada para Nginx

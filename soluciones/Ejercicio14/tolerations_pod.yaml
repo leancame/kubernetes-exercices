@@ -1,0 +1,13 @@
+# Configuración del Pod con tolerancia para nodos con taints específicas
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-worker2  # Nombre del pod
+spec:
+  tolerations:  # Configuración de tolerancias
+  - key: "special"  # Clave de la tolerancia
+    operator: "Exists"  # Operador que permite tolerar cualquier valor con esta clave
+    effect: "NoSchedule"  # Efecto que evita la programación en nodos con esta taint, salvo que exista la tolerancia
+  containers:
+  - name: nginx  # Nombre del contenedor
+    image: nginx  # Imagen Docker utilizada para Nginx
